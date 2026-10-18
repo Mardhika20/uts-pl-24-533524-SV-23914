@@ -1,4 +1,3 @@
-
 {
   "info": {
     "name": "RecipeBox API",
@@ -423,6 +422,115 @@
         ],
         "url": "{{base_url}}/api/recipes/99999"
       }
+    },
+    {
+      "name": "Menampilkan Daftar Kategori Resep",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{user_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/categories"
+      },
+      "response": []
+    },
+    {
+      "name": "Menambahkan Favorit",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{user_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"recipe_id\": 3\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{base_url}}/api/favorites"
+      },
+      "response": []
+    },
+    {
+      "name": "Menampilkan Favorit",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{user_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/favorites"
+      },
+      "response": []
+    },
+    {
+      "name": "Menghapus Favorit",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{user_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/favorites/{{recipe_id}}"
+      },
+      "response": []
     }
   ],
   "variable": [
@@ -433,6 +541,22 @@
     {
       "key": "recipe_id",
       "value": "1"
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "user_token",
+      "value": ""
+    },
+    {
+      "key": "admin_password",
+      "value": ""
+    },
+    {
+      "key": "user_password",
+      "value": ""
     }
   ]
 }
