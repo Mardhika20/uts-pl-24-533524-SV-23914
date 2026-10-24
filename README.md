@@ -2,228 +2,149 @@
 
 ### Website Kumpulan dan Manajemen Resep Masakan
 
-**RecipeBox** merupakan aplikasi berbasis web yang dirancang untuk membantu pengguna mencari, melihat, dan menyimpan berbagai resep masakan. Aplikasi ini juga menyediakan halaman administrasi untuk mengelola informasi resep secara terpusat.
+RecipeBox adalah aplikasi web untuk mencari, melihat, dan menyimpan resep masakan favorit. Aplikasi ini juga menyediakan halaman Admin untuk mengelola resep, kategori, dan informasi yang ditampilkan kepada pengguna.
 
-Project RecipeBox dikembangkan sebagai tugas **Ujian Tengah Semester (UTS)** mata kuliah **Konstruksi dan Evolusi Perangkat Lunak (KEPL)** Tahun Akademik 2026/2027.
+Proyek ini dibuat untuk Ujian Tengah Semester (UTS) mata kuliah **Konstruksi dan Evolusi Perangkat Lunak (KEPL)** tahun akademik **2026/2027**. RecipeBox menggunakan frontend Vue.js 3, REST API Laravel, database MySQL, dan Docker Compose. Backend dijalankan dengan FrankenPHP, sedangkan proses pengujian dan deployment image Docker menggunakan GitHub Actions.
 
-Pengembangan aplikasi menerapkan arsitektur frontend dan backend terpisah, REST API, autentikasi berbasis token, containerization menggunakan Docker, serta otomatisasi pengujian dan deployment melalui GitHub Actions.
-
----
-
-## 1. Informasi Project
+## 1. Informasi Proyek
 
 | Informasi | Keterangan |
 |---|---|
-| Nama Project | RecipeBox |
-| Nama | Mardhika Murni Pramestika |
+| Nama proyek | RecipeBox |
+| Nama mahasiswa | Mardhika Murni Pramestika |
 | NIM | 24/533524/SV/23914 |
-| Mata Kuliah | Konstruksi dan Evolusi Perangkat Lunak (KEPL) |
-| Jenis Tugas | Ujian Tengah Semester (UTS) |
-| Tahun Akademik | 2026/2027 |
-| Jenis Aplikasi | Website Manajemen Resep Masakan |
-| Backend | Laravel REST API |
-| Frontend | Vue.js 3 |
-| Database | MySQL |
+| Mata kuliah | Konstruksi dan Evolusi Perangkat Lunak (KEPL) |
+| Jenis tugas | Ujian Tengah Semester (UTS) |
+| Tahun akademik | 2026/2027 |
+| Jenis aplikasi | Website manajemen resep masakan |
+| Backend | Laravel 12 REST API dan Laravel Sanctum |
+| Frontend | Vue.js 3, Vue Router, dan Axios |
+| Database | MySQL 8.4 |
+| Server backend | FrankenPHP |
+| Server frontend | Nginx |
+| Repository | [GitHub RecipeBox](https://github.com/Mardhika20/uts-pl-24-533524-SV-23914) |
 
 ## 2. Deskripsi Aplikasi
 
-RecipeBox merupakan website yang menyediakan kumpulan resep masakan dari berbagai kategori, seperti makanan utama, camilan, minuman, dessert, dan sarapan.
+RecipeBox menyediakan resep dari berbagai kategori, seperti makanan utama, camilan, minuman, dessert, dan sarapan. Pengguna bisa melihat bahan, langkah pembuatan, waktu memasak, jumlah porsi, tingkat kesulitan, serta menyimpan resep ke daftar favorit.
 
-Pengguna dapat mencari resep berdasarkan nama, memfilter berdasarkan kategori, melihat bahan dan langkah pembuatan, serta menyimpan resep favorit.
-
-Aplikasi memiliki dua role, yaitu **User** dan **Admin**, dengan hak akses yang berbeda. User berfokus pada pencarian dan penyimpanan resep, sedangkan Admin bertanggung jawab mengelola seluruh data resep melalui halaman administrasi.
+Aplikasi memiliki dua role, yaitu **User** dan **Admin**. User dapat menjelajahi dan menyimpan resep favorit, sedangkan Admin dapat menambahkan, mengubah, dan menghapus data resep melalui halaman administrasi.
 
 ## 3. Tujuan Pengembangan
 
-Tujuan pengembangan RecipeBox adalah:
-
-1. Membangun aplikasi web menggunakan Laravel sebagai backend REST API dan Vue.js sebagai frontend.
-2. Mengimplementasikan autentikasi berbasis token menggunakan Laravel Sanctum.
-3. Menerapkan operasi Create, Read, Update, dan Delete (CRUD) pada data resep.
-4. Mengintegrasikan frontend, backend, dan database menggunakan Docker Compose.
-5. Mengimplementasikan pengujian otomatis menggunakan GitHub Actions.
-6. Menerapkan Continuous Deployment dengan penyimpanan Docker image melalui GitHub Container Registry (GHCR).
-7. Menggunakan FrankenPHP sebagai web server untuk menjalankan backend Laravel.
+1. Membuat REST API menggunakan Laravel dengan autentikasi token Laravel Sanctum.
+2. Membuat tampilan aplikasi menggunakan Vue.js 3 dan menghubungkannya ke Laravel melalui Axios.
+3. Menerapkan fitur CRUD resep serta pembatasan hak akses Admin dan User.
+4. Menjalankan frontend, backend, dan MySQL dalam container terpisah menggunakan Docker Compose.
+5. Menggunakan FrankenPHP sebagai server aplikasi Laravel.
+6. Menjalankan pengujian otomatis menggunakan GitHub Actions (CI).
+7. Membangun dan mengunggah image Docker ke GitHub Container Registry (GHCR) melalui workflow CD.
 
 ## 4. Fitur Aplikasi
 
-### 4.1 User
+### 4.1 Fitur User
 
-User merupakan pengguna yang mengakses website untuk mencari dan menyimpan resep masakan.
+- Registrasi, login, dan logout.
+- Melihat halaman beranda dan daftar resep.
+- Mencari resep berdasarkan nama dan memfilter berdasarkan kategori.
+- Melihat detail resep, bahan, dan langkah pembuatannya.
+- Melihat informasi waktu memasak, porsi, dan tingkat kesulitan.
+- Menambahkan resep ke favorit, melihat favorit, dan menghapus favorit.
 
-Fitur yang tersedia:
-
-- Login menggunakan akun yang tersedia.
-- Logout dari aplikasi.
-- Melihat halaman beranda.
-- Menjelajahi daftar resep masakan.
-- Mencari resep berdasarkan judul.
-- Memfilter resep berdasarkan kategori.
-- Melihat detail resep.
-- Melihat daftar bahan masakan.
-- Melihat langkah-langkah pembuatan.
-- Melihat informasi waktu memasak, jumlah porsi, dan tingkat kesulitan.
-- Menambahkan resep ke daftar favorit.
-- Melihat daftar resep favorit.
-- Menghapus resep dari daftar favorit.
-
-### 4.2 Admin
-
-Admin merupakan pengguna yang memiliki hak akses untuk mengelola data resep.
-
-Fitur yang tersedia:
+### 4.2 Fitur Admin
 
 - Login dan logout.
-- Mengakses dashboard admin.
-- Melihat statistik jumlah resep, kategori, dan pengguna.
-- Melihat seluruh daftar resep.
-- Menambahkan resep baru.
-- Mengedit informasi resep.
-- Menghapus resep.
-- Menentukan kategori resep.
-- Mengatur bahan, langkah pembuatan, waktu memasak, jumlah porsi, dan tingkat kesulitan.
+- Melihat dashboard dan ringkasan data aplikasi.
+- Melihat daftar dan detail resep.
+- Menambahkan resep baru, termasuk informasi dan gambar resep.
+- Mengubah serta menghapus resep.
+- Menentukan kategori, bahan, langkah, waktu memasak, porsi, dan tingkat kesulitan.
+
+### 4.3 Hak Akses
+
+- **Admin:** dapat mengelola resep melalui endpoint yang dilindungi middleware Admin.
+- **User:** dapat melihat resep dan mengelola daftar favoritnya.
+- Endpoint yang memerlukan login menggunakan token Laravel Sanctum.
 
 ## 5. Teknologi yang Digunakan
 
 | Teknologi | Kegunaan |
 |---|---|
-| Laravel | Membangun backend REST API |
-| Laravel Sanctum | Autentikasi berbasis token |
-| Vue.js 3 | Membangun antarmuka frontend |
-| Vue Router | Mengatur navigasi halaman |
-| Axios | Menghubungkan frontend dengan REST API |
-| MySQL | Menyimpan data aplikasi |
-| Docker | Menjalankan aplikasi dalam container |
-| Docker Compose | Mengelola beberapa container |
-| FrankenPHP | Menjalankan backend Laravel |
-| Nginx | Menyajikan frontend Vue.js |
-| Git dan GitHub | Version control dan kolaborasi pengembangan |
-| GitHub Actions | Continuous Integration dan Continuous Deployment |
-| GitHub Container Registry | Menyimpan Docker image |
-| Postman | Menguji endpoint REST API |
+| Laravel 12 | Backend REST API |
+| Laravel Sanctum | Autentikasi menggunakan token |
+| Vue.js 3 | Antarmuka aplikasi |
+| Vue Router | Navigasi antarmenu dan halaman |
+| Axios | Mengirim permintaan HTTP ke API Laravel |
+| MySQL 8.4 | Menyimpan data pengguna, kategori, resep, dan favorit |
+| Docker dan Docker Compose | Membangun serta menjalankan layanan dalam container |
+| FrankenPHP | Server untuk menjalankan Laravel |
+| Caddyfile | Pengaturan server dan log HTTP FrankenPHP |
+| Nginx | Menyajikan frontend Vue.js serta meneruskan permintaan API |
+| Git dan GitHub | Version control dan pengelolaan repository |
+| GitHub Actions | Pengujian otomatis dan workflow deployment |
+| GitHub Container Registry (GHCR) | Penyimpanan image Docker |
+| Postman | Pengujian REST API |
 
 ## 6. Arsitektur Aplikasi
 
-RecipeBox menggunakan arsitektur frontend dan backend yang terpisah.
+Frontend, backend, dan database berjalan sebagai tiga service terpisah di Docker Compose.
 
 ```text
-                Pengguna
-                   |
-                   v
-          Frontend Vue.js
-             (Nginx)
-                   |
-                   | HTTP Request / Axios
-                   v
-          Backend Laravel API
-             (FrankenPHP)
-                   |
-                   | Query Database
-                   v
-                MySQL
+                Pengguna / Browser
+                        |
+                        v
+              Frontend Vue.js
+                 (Nginx)
+                        |
+                 HTTP / Axios
+                        |
+                        v
+             Backend Laravel API
+                 (FrankenPHP)
+                        |
+                 Query Database
+                        |
+                        v
+                   MySQL
 ```
 
-Frontend bertugas menampilkan antarmuka aplikasi dan mengirimkan permintaan HTTP menggunakan Axios.
+Alur data dimulai saat pengguna melakukan aktivitas pada Vue.js, misalnya membuka daftar resep atau menambahkan resep baru. Axios mengirim permintaan API melalui frontend/Nginx ke backend Laravel. Laravel memeriksa token, memvalidasi data, lalu membaca atau mengubah data di MySQL. Hasilnya dikirim kembali dalam bentuk respons JSON untuk ditampilkan pada halaman Vue.js.
 
-Backend Laravel menerima permintaan, memvalidasi data, memeriksa autentikasi dan hak akses pengguna, kemudian berkomunikasi dengan database MySQL.
-
-Backend mengembalikan respons dalam format JSON yang selanjutnya ditampilkan oleh frontend.
-
-Pada lingkungan Docker, ketiga layanan akan dijalankan dalam container terpisah menggunakan Docker Compose.
+Di dalam jaringan Docker Compose, nama service seperti `backend` dan `db` digunakan untuk komunikasi antarkontainer.
 
 ## 7. Struktur Database
 
-RecipeBox dirancang menggunakan empat tabel utama.
+Tabel utama yang digunakan RecipeBox adalah:
 
-### 7.1 Tabel `users`
-
-Menyimpan informasi akun pengguna.
-
-| Kolom | Keterangan |
+| Tabel | Fungsi |
 |---|---|
-| id | Primary key |
-| name | Nama pengguna |
-| email | Email pengguna |
-| password | Password yang telah di-hash |
-| role | Hak akses admin atau user |
-| created_at | Waktu pembuatan data |
-| updated_at | Waktu perubahan data |
+| `users` | Menyimpan akun serta role Admin atau User |
+| `categories` | Menyimpan daftar kategori resep |
+| `recipes` | Menyimpan judul, deskripsi, bahan, langkah, waktu, porsi, tingkat kesulitan, gambar, dan kategori resep |
+| `favorites` | Menyimpan hubungan antara pengguna dan resep yang difavoritkan |
+| `personal_access_tokens` | Menyimpan token autentikasi Laravel Sanctum |
 
-### 7.2 Tabel `categories`
+Pada tabel `recipes`, kolom utama yang digunakan mencakup `id`, `user_id`, `category_id`, `title`, `description`, `ingredients`, `instructions`, `cooking_time`, `servings`, `difficulty`, `image_url`, `created_at`, dan `updated_at`.
 
-Menyimpan kategori resep.
+Relasi resep dan kategori menggunakan konsep *one-to-many*: satu kategori dapat memiliki banyak resep, sedangkan satu resep termasuk dalam satu kategori. Tabel favorit menghubungkan akun pengguna dengan resep yang disimpan.
 
-| Kolom | Keterangan |
-|---|---|
-| id | Primary key |
-| name | Nama kategori |
-| slug | Identitas unik kategori |
-| created_at | Waktu pembuatan data |
-| updated_at | Waktu perubahan data |
-
-Contoh kategori:
-
-- Makanan Utama
-- Camilan
-- Minuman
-- Dessert
-- Sarapan
-
-### 7.3 Tabel `recipes`
-
-Menyimpan informasi resep masakan.
-
-| Kolom | Keterangan |
-|---|---|
-| id | Primary key |
-| user_id | ID admin pembuat resep |
-| category_id | ID kategori |
-| title | Judul resep |
-| description | Deskripsi resep |
-| ingredients | Daftar bahan masakan |
-| instructions | Langkah-langkah pembuatan |
-| cooking_time | Waktu memasak dalam menit |
-| servings | Jumlah porsi |
-| difficulty | Tingkat kesulitan |
-| image_url | URL gambar resep |
-| created_at | Waktu pembuatan data |
-| updated_at | Waktu perubahan data |
-
-Kolom `ingredients` dan `instructions` direncanakan menggunakan tipe JSON.
-
-### 7.4 Tabel `favorites`
-
-Menyimpan hubungan antara pengguna dan resep favorit.
-
-| Kolom | Keterangan |
-|---|---|
-| id | Primary key |
-| user_id | ID pengguna |
-| recipe_id | ID resep favorit |
-| created_at | Waktu penambahan favorit |
-
-Setiap pasangan pengguna dan resep hanya dapat tersimpan satu kali.
-
-Selain tabel utama tersebut, Laravel dapat menggunakan tabel tambahan untuk kebutuhan framework, termasuk penyimpanan token autentikasi.
-
-## 8. Rancangan REST API
-
-REST API digunakan sebagai penghubung antara frontend Vue.js dan backend Laravel.
+## 8. REST API RecipeBox
 
 ### 8.1 Autentikasi
 
 | Method | Endpoint | Fungsi | Akses |
 |---|---|---|---|
+| POST | `/api/register` | Membuat akun User baru | Publik |
 | POST | `/api/login` | Login dan mendapatkan token | Publik |
-| POST | `/api/logout` | Menghapus token login | Login |
-| GET | `/api/me` | Melihat informasi akun | Login |
+| POST | `/api/logout` | Menghapus token aktif | Login |
+| GET | `/api/me` | Melihat informasi pengguna | Login |
 
 ### 8.2 Resep
 
 | Method | Endpoint | Fungsi | Akses |
 |---|---|---|---|
-| GET | `/api/recipes` | Melihat daftar resep | Login |
-| GET | `/api/recipes/{id}` | Melihat detail resep | Login |
+| GET | `/api/recipes` | Menampilkan resep | Login |
+| GET | `/api/recipes/{id}` | Menampilkan detail resep | Login |
 | POST | `/api/recipes` | Menambahkan resep | Admin |
 | PUT | `/api/recipes/{id}` | Mengubah resep | Admin |
 | DELETE | `/api/recipes/{id}` | Menghapus resep | Admin |
@@ -232,59 +153,52 @@ REST API digunakan sebagai penghubung antara frontend Vue.js dan backend Laravel
 
 | Method | Endpoint | Fungsi | Akses |
 |---|---|---|---|
-| GET | `/api/categories` | Melihat kategori resep | Login |
+| GET | `/api/categories` | Menampilkan daftar kategori | Login |
 
 ### 8.4 Favorit
 
 | Method | Endpoint | Fungsi | Akses |
 |---|---|---|---|
-| GET | `/api/favorites` | Melihat resep favorit | User |
-| POST | `/api/favorites/{recipeId}` | Menambahkan resep favorit | User |
-| DELETE | `/api/favorites/{recipeId}` | Menghapus resep favorit | User |
+| GET | `/api/favorites` | Menampilkan favorit pengguna | Login |
+| POST | `/api/favorites/{recipeId}` | Menambahkan favorit | Login |
+| DELETE | `/api/favorites/{recipeId}` | Menghapus favorit | Login |
 
 ### 8.5 Dashboard Admin
 
 | Method | Endpoint | Fungsi | Akses |
 |---|---|---|---|
-| GET | `/api/admin/dashboard` | Melihat statistik aplikasi | Admin |
+| GET | `/api/admin/dashboard` | Menampilkan ringkasan data | Admin |
 
-Seluruh endpoint selain login direncanakan menggunakan autentikasi Laravel Sanctum.
+API menggunakan JSON untuk pertukaran data. Pada pengujian, beberapa status HTTP yang digunakan antara lain `200 OK`, `201 Created`, `403 Forbidden`, `404 Not Found`, dan `422 Unprocessable Content`. Permintaan tanpa autentikasi seharusnya menggunakan `401 Unauthorized`.
 
-Respons API akan menggunakan format JSON dengan HTTP status code yang sesuai, seperti:
+**Catatan pengujian:** Pada salah satu pengujian endpoint `/api/recipes` tanpa token setelah migrasi ke FrankenPHP, respons berisi `Unauthenticated` tetapi header menunjukkan `200 OK`. Penanganan HTTP status untuk kasus tersebut masih perlu ditinjau agar sesuai dengan status `401 Unauthorized` yang diharapkan.
 
-- `200 OK`: permintaan berhasil.
-- `201 Created`: data berhasil ditambahkan.
-- `401 Unauthorized`: pengguna belum terautentikasi.
-- `403 Forbidden`: pengguna tidak memiliki hak akses.
-- `404 Not Found`: data tidak ditemukan.
-- `422 Unprocessable Content`: data yang dikirim tidak memenuhi validasi.
+## 9. Halaman Website
 
-## 9. Rancangan Halaman Website
+### Halaman User
 
-### 9.1 Halaman User
+1. Login dan Registrasi.
+2. Beranda.
+3. Jelajahi Resep (pencarian dan filter).
+4. Detail Resep.
+5. Favorit Saya.
 
-1. **Login** — halaman autentikasi pengguna.
-2. **Beranda** — menampilkan pengenalan RecipeBox dan pilihan resep.
-3. **Jelajahi Resep** — menampilkan daftar resep, pencarian, dan filter kategori.
-4. **Detail Resep** — menampilkan informasi lengkap resep.
-5. **Favorit Saya** — menampilkan resep yang disimpan pengguna.
+### Halaman Admin
 
-### 9.2 Halaman Admin
+1. Dashboard Admin.
+2. Kelola Resep.
+3. Tambah Resep.
+4. Edit Resep.
+5. Detail dan Hapus Resep.
 
-1. **Dashboard** — menampilkan ringkasan statistik aplikasi.
-2. **Kelola Resep** — menampilkan daftar resep beserta tindakan pengelolaan.
-3. **Tambah Resep** — formulir untuk membuat resep baru.
-4. **Edit Resep** — formulir untuk memperbarui resep.
-
-Halaman Login digunakan bersama oleh Admin dan User. Setelah login berhasil, pengguna diarahkan sesuai role masing-masing.
+Pengguna diarahkan ke halaman yang sesuai setelah login berdasarkan role akun yang digunakan.
 
 ## 10. Struktur Repository
 
-Struktur repository yang direncanakan:
+Berikut gambaran file dan folder penting di repository RecipeBox:
 
 ```text
 uts-pl-24-533524-SV-23914/
-|
 ├── backend/
 │   ├── app/
 │   ├── bootstrap/
@@ -292,11 +206,11 @@ uts-pl-24-533524-SV-23914/
 │   ├── database/
 │   ├── routes/
 │   ├── tests/
+│   ├── Caddyfile
 │   ├── Dockerfile
 │   ├── .dockerignore
 │   ├── composer.json
 │   └── composer.lock
-│
 ├── frontend/
 │   ├── public/
 │   ├── src/
@@ -306,199 +220,228 @@ uts-pl-24-533524-SV-23914/
 │   │   ├── services/
 │   │   └── views/
 │   ├── Dockerfile
+│   ├── nginx.conf
 │   ├── .dockerignore
 │   ├── package.json
 │   └── package-lock.json
-│
 ├── postman/
 │   └── RecipeBox.postman_collection.json
-│
 ├── .github/
 │   └── workflows/
 │       └── ci.yml
-│
 ├── docker-compose.yml
 ├── .env.example
 ├── .gitignore
 └── README.md
 ```
 
-Struktur folder akan dilengkapi secara bertahap selama pengembangan aplikasi.
+> Struktur ini menunjukkan file utama yang digunakan. Beberapa folder atau file pendukung lain dapat tersedia di repository.
 
-## 11. Strategi Pengembangan Git
+## 11. Strategi Branch GitHub
 
-Pengembangan RecipeBox menggunakan beberapa branch untuk memisahkan pekerjaan.
-
-| Branch | Fungsi |
+| Branch | Kegunaan |
 |---|---|
-| `main` | Menyimpan versi utama aplikasi |
-| `dev` | Integrasi dan pengujian hasil pengembangan |
-| `feature/laravel-api` | Pengembangan backend Laravel |
-| `feature/vue-frontend` | Pengembangan frontend Vue.js |
+| `main` | Branch utama aplikasi |
+| `dev` | Tempat integrasi dan pengujian perubahan |
+| `feature/laravel-api` | Pengembangan backend REST API |
+| `feature/vue-frontend` | Pengembangan antarmuka Vue.js |
+| `feature/github-cd` | Pengembangan workflow CI/CD serta integrasi Docker dan FrankenPHP |
 
-Alur pengembangan:
-
-```text
-feature/laravel-api ──┐
-                      ├──> dev ──> main
-feature/vue-frontend ─┘
-```
-
-Penggabungan perubahan dilakukan melalui Pull Request.
-
-Branch protection akan digunakan untuk mewajibkan Pull Request dan memastikan pemeriksaan CI berhasil sebelum perubahan digabungkan ke branch yang dilindungi.
+Perubahan dikerjakan pada branch fitur, dibuatkan Pull Request menuju `dev`, kemudian digabungkan ke `main` setelah pemeriksaan berhasil. Aturan perlindungan branch digunakan untuk membatasi merge langsung dan mewajibkan pemeriksaan CI.
 
 ## 12. Continuous Integration (CI)
 
-Continuous Integration direncanakan menggunakan GitHub Actions melalui file:
+CI menggunakan workflow GitHub Actions di `.github/workflows/ci.yml` dan dijalankan saat Pull Request menuju `dev` atau `main`.
 
-`.github/workflows/ci.yml`
+Dua job utama yang digunakan:
 
-Workflow CI memiliki minimal dua job utama.
+- **Backend Test:** menjalankan `php artisan test` untuk menguji fitur Laravel.
+- **Frontend Build:** menjalankan `npm ci` dan `npm run build` untuk memastikan aplikasi Vue.js dapat dibangun.
 
-**Backend Test**
-
-Menjalankan pengujian otomatis Laravel menggunakan:
-
-```bash
-php artisan test
-```
-
-**Frontend Build**
-
-Memasang dependensi dan membangun frontend menggunakan:
-
-```bash
-npm ci
-npm run build
-```
-
-CI dijalankan untuk memeriksa perubahan kode sebelum proses penggabungan branch.
+Pull Request diperiksa melalui GitHub Actions sebelum perubahan digabungkan ke branch yang dilindungi.
 
 ## 13. Continuous Deployment (CD)
 
-Continuous Deployment digunakan untuk membangun dan mengirim Docker image ke GitHub Container Registry.
+Workflow CD membangun dan mengunggah image Docker ketika perubahan masuk ke branch `main` sesuai kondisi workflow GitHub Actions.
 
-Proses CD direncanakan berjalan hanya ketika terdapat perubahan yang masuk ke branch `main`.
+Tahapannya:
 
-Tahapan CD:
-
-1. Mengambil kode terbaru dari repository.
+1. Mengambil kode proyek dari repository.
 2. Menjalankan pemeriksaan yang diperlukan.
-3. Membangun Docker image backend.
-4. Membangun Docker image frontend.
-5. Memberikan tag berdasarkan commit SHA.
-6. Mengirim kedua image ke GitHub Container Registry.
+3. Membangun image Docker backend dan frontend.
+4. Memberikan tag image berdasarkan commit SHA, bukan tag `latest`.
+5. Mengunggah image ke GitHub Container Registry (GHCR).
 
-Informasi sensitif seperti `APP_KEY` dan `DB_PASSWORD` tidak disimpan langsung di repository.
+Pengujian pada Pull Request tidak menjalankan job Deploy GHCR, sedangkan deployment pada branch `main` telah diuji melalui GitHub Actions. Informasi rahasia workflow disimpan melalui GitHub Actions Secrets.
 
 ## 14. Docker dan Docker Compose
 
-RecipeBox direncanakan menggunakan tiga service Docker Compose.
+RecipeBox menggunakan tiga service berikut:
 
-| Service | Teknologi | Fungsi |
-|---|---|---|
-| `db` | MySQL | Menyimpan database aplikasi |
-| `backend` | Laravel dan FrankenPHP | Menyediakan REST API |
-| `frontend` | Vue.js dan Nginx | Menampilkan aplikasi |
+| Service | Teknologi | Port host | Fungsi |
+|---|---|---|---|
+| `frontend` | Vue.js dan Nginx | `8080` | Menampilkan website |
+| `backend` | Laravel dan FrankenPHP | `8000` | Melayani REST API |
+| `db` | MySQL 8.4 | Tidak dipublikasikan | Menyimpan database |
 
-Aplikasi akan dijalankan melalui perintah:
+Backend menggunakan image dasar `dunglas/frankenphp:1.4-php8.3` dengan konfigurasi server pada `backend/Caddyfile`. Frontend menggunakan proses build Vue.js yang hasilnya disajikan melalui Nginx.
+
+### 14.1 Persiapan
+
+Pastikan Git, Docker Desktop, dan Docker Compose tersedia. Clone repository:
+
+```bash
+git clone https://github.com/Mardhika20/uts-pl-24-533524-SV-23914.git
+cd uts-pl-24-533524-SV-23914
+```
+
+Buat file `.env` di folder utama dengan menyalin `.env.example`, lalu isi konfigurasi database sesuai kebutuhan:
+
+```env
+DB_DATABASE=recipebox
+DB_USERNAME=recipebox_user
+DB_PASSWORD=isi_password_database_lokal
+DB_ROOT_PASSWORD=isi_password_root_mysql_lokal
+```
+
+Nilai di atas hanya contoh pengisian. Jangan menuliskan password asli pada README atau mengunggah `.env` ke GitHub. Konfigurasi Laravel seperti `APP_KEY` juga harus tersedia sesuai kebutuhan lingkungan backend.
+
+### 14.2 Build dan Menjalankan Aplikasi
+
+Dari folder utama proyek, jalankan:
 
 ```bash
 docker compose up -d --build
 ```
 
-Untuk memeriksa container:
+Periksa status ketiga service:
 
 ```bash
 docker compose ps
 ```
 
-Untuk menghentikan container:
+Setelah container berjalan, aplikasi dapat diakses melalui:
+
+- **Frontend RecipeBox:** http://localhost:8080
+- **Backend Laravel:** http://localhost:8000
+
+Pada lingkungan database yang masih baru, jalankan migrasi dan seeder sesuai kebutuhan:
 
 ```bash
-docker compose down
+docker compose exec backend php artisan migrate --force
+docker compose exec backend php artisan db:seed --class=UserSeeder
 ```
 
-Database akan menggunakan Docker named volume agar data tetap tersimpan ketika container dihentikan dan dijalankan kembali.
+### 14.3 Perintah Docker Compose Lainnya
 
-Konfigurasi lingkungan akan menggunakan file `.env` lokal yang tidak diunggah ke GitHub. Contoh variabel konfigurasi disediakan melalui `.env.example`.
+```bash
+# Melihat log backend
+docker compose logs backend --tail=50
+
+# Memeriksa status container
+docker compose ps
+
+# Menghentikan dan menghapus container tanpa menghapus named volume
+docker compose down
+
+# Menjalankan kembali service
+docker compose up -d
+```
+
+**Penting:** Hindari `docker compose down -v` jika ingin mempertahankan data MySQL, karena opsi `-v` menghapus named volume yang digunakan Compose.
+
+### 14.4 Penyimpanan Data MySQL
+
+Database MySQL menggunakan named volume `mysql_data` yang dipasang ke `/var/lib/mysql`. Volume Docker ini bernama `recipebox_mysql_data` pada proyek lokal yang diuji. Data resep tetap tersedia setelah container dihentikan atau dibuat ulang selama volume tersebut tidak dihapus.
+
+**Catatan gambar resep:** Named volume `mysql_data` hanya menyimpan database, bukan file gambar yang diunggah ke folder storage Laravel. Jika ingin file upload tetap tersedia ketika container backend dibuat ulang, penyimpanan gambar perlu disiapkan secara terpisah, misalnya menggunakan volume atau penyimpanan eksternal.
 
 ## 15. Pengujian Aplikasi
 
-Pengujian RecipeBox direncanakan meliputi:
+### 15.1 Laravel Feature Test
 
-### Laravel Feature Test
+Pengujian otomatis dilakukan pada fitur autentikasi, CRUD, validasi, hak akses, serta beberapa fitur tambahan seperti favorit.
 
-Pengujian otomatis terhadap fungsi backend, termasuk autentikasi, validasi, dan akses endpoint.
+```bash
+docker compose exec backend php artisan test
+```
 
-Minimal dua Feature Test akan dibuat dan dijalankan.
+### 15.2 Postman
 
-### Postman
+Postman digunakan untuk menguji:
 
-Postman digunakan untuk menguji REST API, termasuk:
+- Registrasi, login, dan logout.
+- Akses API dengan dan tanpa token.
+- Operasi CRUD resep.
+- Penanganan validasi dan data yang tidak ditemukan.
+- Pembatasan hak akses Admin dan User.
+- Endpoint kategori serta fitur favorit.
 
-- Login dan logout.
-- Akses endpoint menggunakan token.
-- Menampilkan data resep.
-- Menambahkan resep.
-- Mengubah resep.
-- Menghapus resep.
-- Menguji validasi data.
-- Menguji pembatasan akses berdasarkan role.
+Postman Collection disimpan di folder `postman/` dalam format JSON. Token, password, dan informasi sensitif tidak boleh dicantumkan dalam file yang dipublikasikan.
 
-Postman Collection akan disimpan di dalam folder `postman/` pada repository.
+### 15.3 Pengujian Frontend dan Integrasi
 
-### Pengujian Integrasi
+Pengujian melalui browser mencakup fitur login, tampil resep, tambah, ubah, hapus, pencarian, kategori, dan favorit. Aktivitas API dapat dilihat melalui tab Network pada Developer Tools browser untuk memastikan frontend Vue.js dapat berkomunikasi dengan Laravel.
 
-Pengujian dilakukan untuk memastikan frontend Vue.js dapat mengakses backend Laravel yang berjalan dalam container berbeda dan menyimpan perubahan ke database MySQL.
+### 15.4 Verifikasi FrankenPHP
 
-### Pengujian Persistensi
+Proses utama backend dan log container telah diperiksa untuk memastikan Laravel menggunakan FrankenPHP. Log menunjukkan pesan `FrankenPHP started` dan `handled request` untuk endpoint `/api/recipes`.
 
-Pengujian dilakukan untuk memastikan data tetap tersimpan setelah container dihentikan menggunakan `docker compose down` dan dijalankan kembali.
+Contoh pemeriksaan:
+
+```bash
+docker compose logs backend --tail=50
+```
 
 ## 16. Keamanan Aplikasi
 
-Beberapa mekanisme keamanan yang direncanakan:
+- Password pengguna disimpan menggunakan hashing.
+- Autentikasi API menggunakan Laravel Sanctum.
+- Hak akses Admin dan User diperiksa pada backend.
+- Input divalidasi sebelum diproses.
+- File `.env` diabaikan oleh Git menggunakan `.gitignore`.
+- File `.env.example` disediakan tanpa password asli.
+- Rahasia workflow disimpan melalui GitHub Actions Secrets.
+- Postman Collection perlu dipastikan tidak memuat token aktif atau kredensial asli sebelum dipublikasikan.
 
-- Autentikasi menggunakan Laravel Sanctum.
-- Password disimpan dalam bentuk hash.
-- Endpoint API dilindungi menggunakan token.
-- Hak akses Admin dan User dibatasi pada backend.
-- Validasi data dilakukan sebelum penyimpanan.
-- Kredensial database tidak ditulis langsung di source code.
-- File `.env` tidak dimasukkan ke repository.
-- Konfigurasi rahasia untuk workflow menggunakan GitHub Actions Secrets.
+## 17. Kendala dan Solusi Selama Pengembangan
 
-## 17. Dokumentasi UTS
+Beberapa kendala yang ditemui selama pengerjaan proyek:
 
-Dokumentasi pengerjaan disusun dalam bentuk laporan PDF yang memuat:
+| Kendala | Penanganan |
+|---|---|
+| Gambar resep tidak muncul | Memeriksa file upload dan memperbaiki symbolic link `public/storage` agar mengarah ke folder storage Laravel |
+| Perubahan direktori backend setelah menggunakan FrankenPHP | Menyesuaikan direktori aplikasi dan konfigurasi Caddyfile |
+| Dockerfile gagal di-build ketika menambahkan ekstensi PHP | Memperbaiki penulisan baris instalasi ekstensi pada Dockerfile |
+| Laravel membutuhkan ekstensi PHP `intl` untuk perintah pemeriksaan database | Menambahkan `intl` pada instalasi ekstensi PHP dan membangun ulang backend |
+| Status respons autentikasi tidak sesuai yang diharapkan pada salah satu pengujian | Dicatat untuk pemeriksaan lanjutan pada penanganan status HTTP Laravel |
 
-1. Persiapan repository GitHub.
-2. Implementasi Laravel REST API.
-3. Implementasi frontend Vue.js.
-4. Penggunaan branch dan Pull Request.
-5. Konfigurasi GitHub Actions CI.
-6. Konfigurasi Continuous Deployment ke GHCR.
-7. Pembuatan Dockerfile.
-8. Implementasi Docker Compose.
-9. Penggunaan FrankenPHP.
-10. Hasil pengujian dan screenshot.
-11. Kendala selama pengembangan dan solusi yang diterapkan.
+## 18. Dokumentasi UTS
 
-## 18. Informasi Mahasiswa
+Laporan UTS disusun dalam format PDF dan mencakup:
 
-**Nama:** Mardhika Murni Pramestika  
-**NIM:** 24/533524/SV/23914  
-**Mata Kuliah:** Konstruksi dan Evolusi Perangkat Lunak (KEPL)  
-**Jenis Tugas:** Ujian Tengah Semester (UTS)  
-**Tahun Akademik:** 2026/2027
+1. Pembuatan repository GitHub, clone, dan pengelolaan branch.
+2. Implementasi Laravel REST API, Sanctum, CRUD, dan pengujian Postman.
+3. Pengembangan frontend Vue.js beserta integrasi Axios.
+4. Pull Request, branch protection, dan Continuous Integration.
+5. Continuous Deployment ke GHCR.
+6. Dockerfile, Docker Compose, jaringan antarlayanan, dan named volume MySQL.
+7. Penggunaan serta verifikasi FrankenPHP.
+8. Screenshot proses pengerjaan, pengujian, kendala, dan solusi.
 
-## 19. Status Project
+## 19. Informasi Mahasiswa
 
-**Dalam tahap pengembangan.**
+- **Nama:** Mardhika Murni Pramestika
+- **NIM:** 24/533524/SV/23914
+- **Mata kuliah:** Konstruksi dan Evolusi Perangkat Lunak (KEPL)
+- **Jenis tugas:** Ujian Tengah Semester (UTS)
+- **Tahun akademik:** 2026/2027
 
-Fitur, struktur repository, konfigurasi Docker, pengujian, dan workflow CI/CD akan dilengkapi secara bertahap sesuai progres implementasi.
+## 20. Status Proyek
+
+**Implementasi utama RecipeBox telah selesai untuk kebutuhan UTS.**
+
+Fitur utama, integrasi frontend dan backend, koneksi database MySQL, Docker Compose, pengujian API, CI/CD, dan penggunaan FrankenPHP sudah diterapkan serta diuji. Dokumentasi ini menggambarkan hasil pengerjaan proyek RecipeBox, dengan catatan bahwa beberapa detail teknis masih dapat disempurnakan setelah pengujian.
 
 ---
 
