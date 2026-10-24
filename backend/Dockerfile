@@ -1,12 +1,13 @@
 
-FROM php:8.3-cli
+FROM dunglas/frankenphp:1.4-php8.3
 
-WORKDIR /var/www/html
+WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
-    git unzip libzip-dev libsqlite3-dev \
-    && docker-php-ext-install pdo_mysql pdo_sqlite zip \
-    && rm -rf /var/lib/apt/lists/*
+RUN install-php-extensions \
+    pdo_mysql \
+    pdo_sqlite \
+    zip \
+    intl
 
 COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
@@ -17,6 +18,8 @@ RUN composer install --no-dev --no-interaction \
 
 COPY . .
 
+COPY Caddyfile /etc/frankenphp/Caddyfile
+
 RUN composer dump-autoload --optimize \
     && mkdir -p storage/framework/cache \
        storage/framework/sessions \
@@ -24,6 +27,9 @@ RUN composer dump-autoload --optimize \
        storage/logs bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
+ENV SERVER_NAME=:8000
+ENV CADDY_SERVER_ROOT=/app/public
+
 EXPOSE 8000
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+CMD ["frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile"]
