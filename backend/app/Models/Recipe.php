@@ -37,6 +37,12 @@ class Recipe extends Model
     {
         return $this->hasMany(Favorite::class);
     }
+
+    // Relasi untuk rating dan review resep
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(RecipeReview::class);
+    }
 }
 
 

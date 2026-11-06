@@ -22,6 +22,9 @@
         </label>
       </section>
 
+      <!-- Smart Recipe Finder: cari resep berdasarkan bahan -->
+      <SmartRecipeFinder />
+
       <div class="results-heading"><strong>{{ filteredRecipes.length }} resep untuk dijelajahi</strong><span>↧ &nbsp; Terbaru ditambahkan</span></div>
       <p v-if="error" class="notice error">{{ error }} <button @click="loadData">Coba lagi</button></p>
       <p v-if="loading" class="notice">Memuat resep...</p>
@@ -52,6 +55,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getCategories, getRecipes } from '../../services/recipeService'
 import { getFavorites, addFavorite, removeFavorite } from '../../services/favoriteService'
+import SmartRecipeFinder from '../../components/recipe/SmartRecipeFinder.vue'
 
 const router = useRouter()
 const route = useRoute()

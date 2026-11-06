@@ -1,4 +1,3 @@
-
 import api from './api'
 
 // Mengambil seluruh kategori
@@ -19,38 +18,26 @@ export async function getRecipeById(id) {
   return response.data
 }
 
-// Menambahkan resep dengan upload gambar (Admin)
+// Menambahkan resep dengan upload gambar
 export async function createRecipe(data) {
-  const response = await api.post('/recipes', data, {
-    headers: {
-      'Content-Type': undefined,
-    },
-  })
-
+  const response = await api.post('/recipes', data)
   return response.data
 }
 
-// Mengubah resep dengan upload gambar (Admin)
+// Mengubah resep, termasuk mengganti gambar
 export async function updateRecipe(id, data) {
-  // Laravel membaca _method=PUT untuk update multipart/form-data
   if (data instanceof FormData) {
     data.set('_method', 'PUT')
 
-    const response = await api.post(`/recipes/${id}`, data, {
-      headers: {
-        'Content-Type': undefined,
-      },
-    })
-
+    const response = await api.post(`/recipes/${id}`, data)
     return response.data
   }
 
-  // Tetap mendukung update JSON
   const response = await api.put(`/recipes/${id}`, data)
   return response.data
 }
 
-// Menghapus resep (Admin)
+// Menghapus resep
 export async function deleteRecipe(id) {
   const response = await api.delete(`/recipes/${id}`)
   return response.data
