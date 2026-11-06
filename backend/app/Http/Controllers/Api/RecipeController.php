@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Recipe;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RecipeController extends Controller
 {
@@ -30,10 +31,18 @@ class RecipeController extends Controller
             'instructions' => ['required', 'string'],
             'cooking_time' => ['required', 'integer', 'min:1'],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
-            'image_url' => ['nullable', 'url', 'max:255'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'image_url' => ['nullable', 'string', 'max:2048'],
             'difficulty' => ['nullable', 'in:Mudah,Sedang,Sulit'],
             'servings' => ['nullable', 'integer', 'min:1'],
         ]);
+
+        unset($validated['image']);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('recipes', 'public');
+            $validated['image_url'] = '/storage/' . $path;
+        }
 
         $recipe = Recipe::create($validated);
 
@@ -60,10 +69,26 @@ class RecipeController extends Controller
             'instructions' => ['sometimes', 'required', 'string'],
             'cooking_time' => ['sometimes', 'required', 'integer', 'min:1'],
             'category_id' => ['sometimes', 'required', 'integer', 'exists:categories,id'],
-            'image_url' => ['sometimes', 'nullable', 'url', 'max:255'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'image_url' => ['sometimes', 'nullable', 'string', 'max:2048'],
             'difficulty' => ['sometimes', 'nullable', 'in:Mudah,Sedang,Sulit'],
             'servings' => ['sometimes', 'nullable', 'integer', 'min:1'],
         ]);
+
+        unset($validated['image']);
+
+        if ($request->hasFile('image')) {
+            $oldImage = $recipe->image_url;
+
+            $path = $request->file('image')->store('recipes', 'public');
+            $validated['image_url'] = '/storage/' . $path;
+
+            if ($oldImage && str_starts_with($oldImage, '/storage/')) {
+                Storage::disk('public')->delete(
+                    substr($oldImage, strlen('/storage/'))
+                );
+            }
+        }
 
         $recipe->update($validated);
 
