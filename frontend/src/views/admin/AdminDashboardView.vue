@@ -2,6 +2,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import AdminAnalyticsPanel from '../../components/admin/AdminAnalyticsPanel.vue'
 import {
   getCategories,
   getRecipes,
@@ -289,6 +290,9 @@ onMounted(loadDashboard)
         </div>
 
       </div>
+
+      <!-- Analytics tambahan: menggunakan komponen terpisah tanpa mengubah desain lama -->
+      <AdminAnalyticsPanel />
 
       <!-- Judul Tabel -->
       <div class="recipes-heading">

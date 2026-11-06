@@ -19,6 +19,9 @@
         <section class="ingredients"><div class="section-heading"><h2>Bahan-bahan</h2><span v-if="recipe.servings" class="tag">{{ recipe.servings }} porsi</span></div><p class="hint">Siapkan semua bahan sebelum mulai memasak.</p><ul><li v-for="(item,index) in ingredientItems" :key="index"><label><input type="checkbox" v-model="checkedIngredients" :value="index"/><span>{{ item }}</span></label></li></ul><p v-if="!ingredientItems.length" class="hint">Belum ada bahan yang dicantumkan.</p></section>
         <section class="instructions"><h2>Langkah Memasak</h2><p class="hint">Ikuti langkah berikut untuk menyiapkan hidangan.</p><ol><li v-for="(step,index) in instructionItems" :key="index"><span class="step-number">{{ index+1 }}</span><div><h3>Langkah {{ index+1 }}</h3><p>{{ step }}</p></div></li></ol><p v-if="!instructionItems.length" class="hint">Langkah memasak belum tersedia.</p></section>
       </div>
+      <!-- Tahap 9: Rating dan Review (tetap memakai desain RecipeBox) -->
+      <RecipeReviews :recipe-id="recipe.id" />
+
       <section v-if="relatedRecipes.length" class="related"><h2>Masakan lain untuk dicoba</h2><p class="hint">Lengkapi meja makan dengan resep dari koleksi kami.</p><div class="recipe-grid"><article v-for="item in relatedRecipes" :key="item.id" class="recipe-card"><div class="card-photo" @click="openRecipe(item.id)"><img v-if="item.image_url && !brokenRelated.has(item.id)" :src="item.image_url" :alt="item.title" @error="markBroken(item.id)"/><span v-else class="placeholder">🍲</span><button class="heart" :class="{ active: favoriteIds.has(Number(item.id)) }" :disabled="favoriteBusy" @click.stop="toggleRelated(item)">{{ favoriteIds.has(Number(item.id)) ? '♥' : '♡' }}</button></div><div class="card-body" @click="openRecipe(item.id)"><span class="tag">{{ categoryName(item) }}</span><h3>{{ item.title }}</h3><p>◷ {{ item.cooking_time ?? '—' }} menit &nbsp; · &nbsp; {{ item.difficulty || '—' }}</p></div></article></div></section>
     </template>
   </div></main>
@@ -29,6 +32,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getRecipeById, getRecipes, getCategories } from '../../services/recipeService'
 import { getFavorites, addFavorite, removeFavorite } from '../../services/favoriteService'
+import RecipeReviews from '../../components/recipe/RecipeReviews.vue'
 const route = useRoute()
 const router = useRouter()
 const recipe = ref(null)
