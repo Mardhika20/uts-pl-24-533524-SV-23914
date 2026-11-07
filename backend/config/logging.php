@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'default' => env('LOG_CHANNEL', 'stack'),
+    'default' => env('LOG_CHANNEL', 'stdout'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,6 +51,17 @@ return [
     */
 
     'channels' => [
+
+        // Channel stdout untuk logging JSON
+        'stdout' => [
+            'driver' => 'monolog',
+            'level' => env('LOG_LEVEL', 'info'),
+            'handler' => StreamHandler::class,
+            'handler_with' => [
+                'stream' => 'php://stdout',
+            ],
+            'formatter' => \Monolog\Formatter\JsonFormatter::class,
+        ],
 
         'stack' => [
             'driver' => 'stack',
