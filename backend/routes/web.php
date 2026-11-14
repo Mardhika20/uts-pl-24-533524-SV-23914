@@ -27,3 +27,14 @@ Route::get('/p10-status-test', function () {
         'message' => 'Pengujian status HTTP',
     ], 418);
 });
+
+// P11: Endpoint metrics untuk Prometheus
+Route::get('/metrics', function () {
+    return response(
+        \App\Http\Middleware\TrackHttpRequests::renderMetrics(),
+        200,
+        [
+            'Content-Type' => 'text/plain; version=0.0.4; charset=utf-8',
+        ]
+    );
+});
