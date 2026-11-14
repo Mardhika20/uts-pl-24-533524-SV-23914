@@ -1,0 +1,14 @@
+
+groups:
+  - name: recipebox_backend_alerts
+    rules:
+      - alert: RecipeBoxBackendDown
+        expr: up{job="recipebox-backend"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: recipebox-backend
+        annotations:
+          summary: "Backend RecipeBox tidak dapat diakses"
+          description: "Prometheus gagal mengambil metrik backend RecipeBox selama minimal 2 menit."
+          first_action: "Periksa status backend dengan docker compose ps backend, kemudian periksa log menggunakan docker compose logs --tail=50 backend."
