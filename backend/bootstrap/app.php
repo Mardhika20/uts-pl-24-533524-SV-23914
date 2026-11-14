@@ -1,3 +1,4 @@
+
 <?php
 
 use App\Http\Controllers\HealthController;
@@ -23,6 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
+
+        // P11: Middleware monitoring HTTP requests
+        $middleware->append(\App\Http\Middleware\TrackHttpRequests::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
